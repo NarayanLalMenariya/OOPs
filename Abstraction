@@ -1,0 +1,63 @@
+//=============================================================================================
+// Abstraction: displaying only essential information and hiding the details from outer world.
+// Access specifiers are the main pillar of implementing abstraction in C++.
+// Advantages: Helps to increase security of an application or program as only important details are provided to the user.
+//
+// Narayan Lal Menariya                                                       May 17,2020
+//==============================================================================================
+#include<stdio.h>
+#include<iostream>
+
+using namespace std;
+class Abstraction
+{
+	private:
+		int a,b;
+	public:
+		int c;
+	
+		Abstraction()
+		{
+			cout << "Constructor of class\n";
+			a = 0, b = 0, c= 0;	
+		}	
+		
+		~Abstraction()
+		{
+			cout << "Destructor of class\n";
+		}
+		void Set(int a,int b, int c)
+		{
+			this->a = a;
+			this->b = b;
+			this->c = c;
+		}
+	
+		void Display()
+		{
+			cout << "A:" <<a  << ", B:"<< b << ", C:"<<c<<endl;
+		}
+};
+
+int main()
+{
+	Abstraction Obj;
+	
+	//Set value of a,b,c
+	Obj.Set(10,20,30);
+	Obj.Display();
+	
+	//Try to access a,b,c here
+	// a,b are private , hence can not be accessed outside class
+	//Obj.a = 1;
+	//Obj.b = 2;
+	
+	//c is public and hence can be accessed.
+	Obj.c = 3;
+	
+	Obj.Display();
+	
+	return 0;
+}
+
+
