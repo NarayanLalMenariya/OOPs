@@ -2,62 +2,120 @@
 // Abstraction: displaying only essential information and hiding the details from outer world.
 // Access specifiers are the main pillar of implementing abstraction in C++.
 // Advantages: Helps to increase security of an application or program as only important details are provided to the user.
-//
+// 
+// Friend Class & Friend funcion: A friend class or friend function can access private and protected members of other class 
+// in which it is declared as friend. 
+// 
+// Pointer's can also be used to access private data outside the class without using friend concept.
+// 
 // Narayan Lal Menariya                                                       May 17,2020
 //==============================================================================================
-#include<stdio.h>
 #include<iostream>
-
 using namespace std;
-class Abstraction
-{
-	private:
-		int a,b;
-	public:
-		int c;
-	
-		Abstraction()
-		{
-			cout << "Constructor of class\n";
-			a = 0, b = 0, c= 0;	
-		}	
-		
-		~Abstraction()
-		{
-			cout << "Destructor of class\n";
-		}
-		void Set(int a,int b, int c)
-		{
-			this->a = a;
-			this->b = b;
-			this->c = c;
-		}
-	
-		void Display()
-		{
-			cout << "A:" <<a  << ", B:"<< b << ", C:"<<c<<endl;
-		}
-};
 
-int main()
+//class A
+class A
 {
-	Abstraction Obj;
+	protected:
+		int d;
+	private:
+		int c;
+
+	public:
+		int a,b;
+		
+	//Constructor	
+	A()
+	{
+		cout<<"A:: Constructor\n";
+		a=0,b=0,c=0,d=0;
+	}
+	//Destructor
+	~A()
+	{
+		cout <<"A::Destructor\n";
+	}
+
+	//Class method
+	void Set(int a,int b,int c,int d);
+	void Display();
 	
-	//Set value of a,b,c
-	Obj.Set(10,20,30);
-	Obj.Display();
+	//Global Friend function
+	friend void Show(A obj);
 	
-	//Try to access a,b,c here
-	// a,b are private , hence can not be accessed outside class
-	//Obj.a = 1;
-	//Obj.b = 2;
+	//Friend Class can access all private and public attributes.
+	friend class B;
 	
-	//c is public and hence can be accessed.
-	Obj.c = 3;
+	//main method can also be declared as friend method. 
+	//friend int main();
+};
 	
-	Obj.Display();
+//Set method
+void A::Set(int a,int b, int c, int d)
+{
+	this->a = a;
+	this->b = b;
+	this->c = c;
+	this->d = d;
+}
 	
-	return 0;
+//display method;
+void A::Display()
+{
+	cout<<"Display A: a:"<<a<<", b:"<<b<<", c:"<<c<<", d:" <<d<<endl;
+}
+
+//Global method
+void Show(A obj)
+{
+	cout << "Global Show a:" <<obj.a<<", b:"<<obj.b<<", c:"<<obj.c<<", d:" <<obj.d<<endl;
 }
 
 
+//Class B
+class B
+{
+	public:
+		B() {cout << "B:: Constructor\n";}
+		
+		void Get(A& obj)
+		{
+			cout << "B Get: a:" <<obj.a<<", b:"<<obj.b<<", c:"<<obj.c<<", d:" <<obj.d<<endl;
+		}
+	
+};
+
+//main method
+int main()
+{
+	A objA;
+	objA.Display();
+	objA.Set(10,20,30,40);
+	objA.Display();
+	
+	//Private & Protected values can not be access outside class: Abstraction
+	// if we declares main() method as friend method then allowed to access
+	//cout << "Main: c:" <<objA.c;
+	
+	//Friend function can access private & protected attributes of a class.
+	Show(objA);
+	
+	//Friend class is also allowed to access private and protected attributes of another class.
+	B objB;
+	objB.Get(objA);
+
+	//*****************************************************
+	//Access private & protected data using pointer
+	int* ptr =  (int*)&objA;
+	*(ptr++) = 100; //Assign value to d and increment pointer
+	//ptr++;      
+	
+	*ptr = 200; //value to c
+	ptr++;
+	*ptr = 300; //value to a
+	
+	objA.Display();
+
+
+	return 1;
+}
