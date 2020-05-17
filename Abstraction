@@ -119,3 +119,22 @@ int main()
 
 	return 1;
 }
+
+=====================================================
+Output:
+
+A:: Constructor
+Display A: a:0, b:0, c:0, d:0
+Display A: a:10, b:20, c:30, d:40
+Global Show a:10, b:20, c:30, d:40
+A::Destructor
+B:: Constructor
+B Get: a:10, b:20, c:30, d:40
+Display A: a:300, b:20, c:200, d:100
+A::Destructor
+
+
+
+
+
+
