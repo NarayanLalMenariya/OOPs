@@ -1,0 +1,158 @@
+1. 
+#include<iostream>
+using namespace std;
+class A
+{
+	public:
+		A()
+		{
+			cout << "A Constructor\n";
+		}
+		
+		void ShowA()
+		{
+			cout << "Class A: ShowA\n";
+		}
+	
+		void ShowC()
+		{
+			cout << "Class A: ShowC\n";
+		}
+};
+
+class B:public A
+{
+	public:
+		B()
+		{
+			cout << "B Constructor\n";	
+		}
+		
+		void ShowA()
+		{
+			cout << "Class B: ShowA\n";
+		}
+		
+		void ShowB()
+		{
+			cout << "Class B: ShowB\n";	
+			
+			//In Class B ShowA() method is present hence this method will be called. else
+			//Class A ShowA() method will be called.
+			
+			this->ShowA(); //Same as below
+			ShowA();
+			
+			this->ShowC(); //same as below
+			ShowC();
+		}	
+};
+
+
+int main()
+{
+	B obj;
+	obj.ShowB();
+	return 1;
+}
+
+
+==================
+output:
+
+A Constructor
+B Constructor
+Class B: ShowB
+Class B: ShowA
+Class B: ShowA
+Class A: ShowC
+Class A: ShowC
+
+
+//===================================================================================
+2.  Guess output of below
+#include<iostream>
+using namespace std;
+class A
+{
+	public:
+		A()
+		{
+			cout << "A Constructor\n";
+		}
+		
+		void ShowB()
+		{
+			cout << "Class A: ShowB\n";
+		}
+		
+		void ShowC()
+		{
+			cout << "Class C: ShowC\n";
+		}
+};
+
+class B:public A
+{
+	public:
+		B()
+		{
+			cout << "B Constructor\n";	
+		}
+		
+		void ShowB()
+		{
+			cout << "Class B: ShowB\n";
+		}
+		
+};
+
+class C:public B
+{
+	public:
+		C()
+		{
+			cout << "C Constructor\n";
+		}
+	
+		void ShowA()
+		{
+			cout << "Class C: ShowA\n";
+			ShowB(); // Class B method will be called.
+			ShowC();
+		}
+		
+};
+
+int main()
+{
+	C obj;
+	obj.ShowA();
+	return 1;
+}
+
+==========
+output:
+
+
+A Constructor
+B Constructor
+C Constructor
+Class C: ShowA
+Class B: ShowB
+Class C: ShowC
+
+====================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
